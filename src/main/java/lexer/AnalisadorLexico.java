@@ -348,7 +348,27 @@ public class AnalisadorLexico {
                 }
                 return criarToken(TipoToken.ATRIBUICAO, "=", linhaInicial, colunaInicial, posicaoInicial);
                 
-            // Adicionar outros operadores conforme necessário
+            case '>':
+                if (caracterAtual() == '=') {
+                    consumirCaracter();
+                    return criarToken(TipoToken.MAIOR_IGUAL, ">=", linhaInicial, colunaInicial, posicaoInicial);
+                }
+                return criarToken(TipoToken.MAIOR, ">", linhaInicial, colunaInicial, posicaoInicial);
+
+            case '<':
+                if (caracterAtual() == '=') {
+                    consumirCaracter();
+                    return criarToken(TipoToken.MENOR_IGUAL, "<=", linhaInicial, colunaInicial, posicaoInicial);
+                }
+                return criarToken(TipoToken.MENOR, "<", linhaInicial, colunaInicial, posicaoInicial);
+
+            case '!':
+                if (caracterAtual() == '=') {
+                    consumirCaracter();
+                    return criarToken(TipoToken.DIFERENTE, "!=", linhaInicial, colunaInicial, posicaoInicial);
+                }
+                return criarToken(TipoToken.NEGACAO, "!", linhaInicial, colunaInicial, posicaoInicial);
+                
             default:
                 return criarTokenErro(String.valueOf(c), linhaInicial, colunaInicial, posicaoInicial);
         }
