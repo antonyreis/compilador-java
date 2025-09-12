@@ -2,22 +2,16 @@ package main;
 
 import lexer.*;
 import parser.*;
+import java.nio.file.*;
 
 public class Main {
-    public static void main(String[] args) {
-        String codigoJava = """
-            public class HelloWorld {
-                public static void main(String[] args) {
-                    int numero = 42;
-                    double valor = 3.14159;
-                    String mensagem = "Olá, mundo!";
-                    
-                    if (numero > 0) {
-                        System.out.println(mensagem);
-                    }
-                }
-            }
-            """;
+    public static void main(String[] args) throws Exception {
+        if (args.length == 0) {
+            System.out.println("Uso: java Main <arquivo.java>");
+            return;
+        }
+
+        String codigoJava = Files.readString(Path.of(args[0]));
 
         AnalisadorLexico lexer = new AnalisadorLexico(codigoJava);
 
@@ -41,7 +35,7 @@ public class Main {
 
         System.out.println("\n=== ANÁLISE SINTÁTICA ===");
         try {
-            lexer = new AnalisadorLexico(codigoJava); // reinicia para o parser
+            lexer = new AnalisadorLexico(codigoJava); // reinicia
             AnalisadorSintatico parser = new AnalisadorSintatico(lexer);
             parser.programa();
         } catch (ErroSintatico e) {
