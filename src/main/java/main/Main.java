@@ -1,7 +1,7 @@
 package main;
 
 import lexer.*;
-import java.util.List;
+import parser.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,27 +18,34 @@ public class Main {
                 }
             }
             """;
-        
+
         AnalisadorLexico lexer = new AnalisadorLexico(codigoJava);
-        
+
         System.out.println("=== ANÁLISE LÉXICA ===");
-        
         Token token;
         do {
             token = lexer.proximoToken();
             System.out.printf("%-20s | %-15s | Linha: %2d | Coluna: %2d%n",
-                            token.getTipo(),
-                            token.getValor(),
-                            token.getLinha(),
-                            token.getColuna());
+                    token.getTipo(),
+                    token.getValor(),
+                    token.getLinha(),
+                    token.getColuna());
         } while (token.getTipo() != TipoToken.EOF);
-        
-        // Exibe erros se houver
+
         if (!lexer.getErros().isEmpty()) {
-            System.out.println("\n=== ERROS ENCONTRADOS ===");
+            System.out.println("\n=== ERROS LÉXICOS ===");
             for (ErroLexico erro : lexer.getErros()) {
                 System.out.println(erro);
             }
+        }
+
+        System.out.println("\n=== ANÁLISE SINTÁTICA ===");
+        try {
+            lexer = new AnalisadorLexico(codigoJava); // reinicia para o parser
+            AnalisadorSintatico parser = new AnalisadorSintatico(lexer);
+            parser.programa();
+        } catch (ErroSintatico e) {
+            System.err.println(e.getMessage());
         }
     }
 }
