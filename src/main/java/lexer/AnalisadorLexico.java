@@ -198,9 +198,8 @@ public class AnalisadorLexico {
         return posicao >= codigoFonte.length();
     }
     
-    // Implementação dos métodos de leitura (esqueleto básico)
+    
     private Token lerNumero() {
-        // Implementar conforme documentação
         int linhaInicial = linha;
         int colunaInicial = coluna;
         int posicaoInicial = posicao;
@@ -254,7 +253,6 @@ public class AnalisadorLexico {
     }
     
     private Token lerString() {
-        // Implementar conforme documentação
         int linhaInicial = linha;
         int colunaInicial = coluna;
         int posicaoInicial = posicao;
@@ -268,7 +266,6 @@ public class AnalisadorLexico {
             char c = caracterAtual();
             
             if (c == '\\') {
-                // Caracteres de escape - implementar
                 consumirCaracter();
                 char escape = consumirCaracter();
                 switch (escape) {
@@ -301,12 +298,10 @@ public class AnalisadorLexico {
     }
     
     private Token processarComentario() {
-        // Implementar conforme documentação
-        return null; // Por enquanto ignora comentários
+        return null; 
     }
     
     private Token lerOperador() {
-        // Implementar conforme documentação
         int linhaInicial = linha;
         int colunaInicial = coluna;
         int posicaoInicial = posicao;
